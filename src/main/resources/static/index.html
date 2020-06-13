@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>Случайные числа - гарантированное счастье</title>
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-app="random-number" ng-controller="RandomNumberController">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="page-header">
+                <h1>Генерация числа</h1>
+                <div class="input-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Введите свой никнейм</span>
+                        </div>
+                        <input type="text" class="form-control"  ng-model="nickname">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" ng-hide="incorrectInput">Введите нижнюю границу</span>
+                            <span class="input-group-text" ng-show="incorrectInput" style="color: red">{{incorrectInput}}</span>
+                        </div>
+                        <input type="number" class="form-control" ng-model="numberFrom">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" ng-hide="incorrectInput">Введите верхнюю границу</span>
+                            <span class="input-group-text" ng-show="incorrectInput" style="color: red">{{incorrectInput}}</span>
+                        </div>
+                        <input type="number" class="form-control"  ng-model="numberTo">
+                    </div>
+                    <button class="btn btn-primary btn-lg" ng-click="addRandomNumber(nickname, numberFrom, numberTo)" ng-disabled="!numberFrom || !numberTo" title="Сгенерировать">
+                        Сгенерировать
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="page-header">
+                <h1>Сгенерированные числа</h1>
+            </div>
+            <div class="alert alert-info" role="alert" ng-hide="randomNumbers &amp;&amp; randomNumbers.length > 0">
+                Здесь пока нет ни одного числа, будь первым!
+            </div>
+            <div ng-repeat="randomNumber in randomNumbers">
+                <div class="container">
+                    <div class="row">
+                        <div class="card col-md-8" style="width: 18rem;">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <input type="text" ng-model="newNickname" ng-value="randomNumber.nickname">
+                                </li>
+                                <li class="list-group-item">Число: {{randomNumber.value}}</li>
+                                <li class="list-group-item">Дата генерации: {{randomNumber.createDate | date: 'dd-MM-yyyy hh:mm:ss'}}</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-info" ng-click="updateRandomNumber(randomNumber, newNickname)">
+                                    Изменить
+                                </button>
+                            </div>
+                                <br>
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-danger" ng-click="deleteRandomNumber(randomNumber)">
+                                    Удалить
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="./bower_components/angular-resource/angular-resource.min.js"></script>
+<script type="text/javascript" src="./bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script type="text/javascript" src="./app/app.js"></script>
+<script type="text/javascript" src="./app/controllers.js"></script>
+<script type="text/javascript" src="./app/services.js"></script>
+</body>
+</html>
